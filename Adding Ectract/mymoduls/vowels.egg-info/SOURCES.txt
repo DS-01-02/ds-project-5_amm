@@ -1,0 +1,7 @@
+README.txt
+setup.py
+vowels.py
+vowels.egg-info/PKG-INFO
+vowels.egg-info/SOURCES.txt
+vowels.egg-info/dependency_links.txt
+vowels.egg-info/top_level.txt
