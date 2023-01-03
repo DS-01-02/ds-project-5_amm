@@ -190,3 +190,49 @@ while True:
                 window_add.close()
         else :
             sg.popup('You Should Be In Phase 1', title='Error', keep_on_top=True,text_color="Red")
+    elif event == "Delete":
+        if faz1 == True:
+            if values["_TREE_"] != [] and faz1 == True:
+                # msg_box = tk.messagebox.askquestion('Delete All Files', 'Are you sure you want to Delete this Files ?',
+                #                                     icon='warning')
+                msg_box = sg.popup_yes_no('Are you sure you want to Delete this Files ?', keep_on_top=True)
+                if msg_box == "Yes":
+                    add2 = []
+                    st = values["_TREE_"]
+                    st = st[0].split('\\')
+                    add2.append(st[1])
+                    if add2 in list_file_s:
+                        list_file_s.remove(add2)
+                        tmp_str = os.listdir("C:/Users/akgh1/PycharmProjects/unzip/Phase3/")
+                        if os.path.exists("C:/Users/akgh1/PycharmProjects/unzip/Phase3/" +tmp_str[0]+'/'+ add2[0]):
+                            os.remove("C:/Users/akgh1/PycharmProjects/unzip/Phase3/"+tmp_str[0]+'/' + add2[0])
+                        os.remove("C:/Users/akgh1/PycharmProjects/unzip/new/" + add2[0])
+                        treedata = sg.TreeData()
+                        window["_TREE_"].update(
+                            add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+            else:
+                sg.popup('You Should Choose A File For Deleting', title='Warning', keep_on_top=True,text_color="Yellow")
+        else:
+            sg.popup('You Should Be In Phase 1', title='Error', keep_on_top=True,text_color="Red")
+
+            # window['_TREE_'].update('')
+            # else:
+            #     sg.popup('there is no ' + add2[0] + ' in this folder!', title='error',background_color='white',text_color='blue', icon=error_icon , keep_on_top=True)
+    elif event == "Save" and faz1 == True:
+        if len(list_file_s) != 0:
+            dicr = []
+            dicr2 = {}
+            for i in list_file_s:
+                i2 = i[0]
+                i2 = i2.split('.')
+                dicr2['name'] = i2[0]
+                dicr2['date'] = int(i2[1])
+                dicr2['format'] = i2[2]
+                dicr.append(dicr2)
+                dicr2 = {}
+
+            with open('sorted_date.json', 'w') as json_file:
+                json.dump(sorted(dicr, key=sort_by_key), json_file)
+            with open('sorted_format.json', 'w') as json_file:
+                json.dump(sorted(dicr, key=sort_by_key_f), json_file)
+            sg.popup('files was saved', title='save' , keep_on_top=True,text_color="Green")
