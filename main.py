@@ -231,7 +231,6 @@ while True:
                 dicr.append(dicr2)
                 dicr2 = {}
 
-
             with open('sorted_date.json', 'w') as json_file:
                 json.dump(sorted(dicr, key=sort_by_key), json_file)
             with open('sorted_format.json', 'w') as json_file:
