@@ -255,3 +255,76 @@ while True:
             window = make_window()
         if faz3 ==True:
            window = make_window_phase3()
+    elif event == 'A File':
+        # window.hide()
+        if faz1 == True:
+            sg.theme(THEME)
+            layout3 = [
+                [sg.Text("Inter the name of file "), sg.Input(key="-IN3-", change_submits=False)],
+                [sg.Button("Delete"), sg.T(""), sg.Button("Cancel")],
+            ]
+            window_delete = sg.Window('delete', layout3, size=(340, 75), keep_on_top=True)
+            while True:
+                if t2:
+                    event2, values2 = window_delete.read()
+                else:
+                    # window_delete.un_hide()
+                    event2, values2 = window_delete.read()
+                if event2 == sg.WIN_CLOSED:
+                    window_delete.close()
+                    # window.un_hide()
+                    t2 = False
+                    break
+                elif event2 == "Exit" or event2 == 'Cancel':
+                    window_delete['-IN3-'].update('')
+                    window_delete.hide()
+                    # window.un_hide()
+                    t2 = False
+                    break
+                elif event2 == 'Delete' and values2['-IN3-'] != '':
+                    add2 = []
+                    add2.append(values2["-IN3-"])
+                    if add2 in list_file_s:
+                        list_file_s.remove(add2)
+                        tmp_str = os.listdir("C:/Users/akgh1/PycharmProjects/unzip/Phase3/")
+                        if os.path.exists("C:/Users/akgh1/PycharmProjects/unzip/Phase3/" + tmp_str[0] + '/' + add2[0]):
+                            os.remove("C:/Users/akgh1/PycharmProjects/unzip/Phase3/" + tmp_str[0] + '/' + add2[0])
+                        os.remove("C:/Users/akgh1/PycharmProjects/unzip/new/" + add2[0])
+                        treedata = sg.TreeData()
+                        window["_TREE_"].update(
+                            add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+                        window_delete['-IN3-'].update('')
+                        window_delete.hide()
+                        t2 = False
+                        add2 = []
+                        # window.un_hide()
+                        break
+                    else:
+                        sg.popup('there is no ' + add2[0] + ' in this folder!', title='error', keep_on_top=True)
+            window_delete.close()
+        else :
+            sg.popup("Error","You Should Be In Phase 1", keep_on_top=True,text_color="Red")
+
+    elif event == 'All Files':
+        if faz1==True:
+
+            if os.path.exists("C:/Users/akgh1/PycharmProjects/unzip/dirname/"):
+                shutil.rmtree("C:/Users/akgh1/PycharmProjects/unzip/dirname/")
+            if os.path.exists("C:/Users/akgh1/PycharmProjects/unzip/Phase3/"):
+                shutil.rmtree("C:/Users/akgh1/PycharmProjects/unzip/Phase3/")
+            window.hide()
+            msg_box = tk.messagebox.askquestion('Delete All Files', 'Are you sure you want to Delete All Files ?',
+                                                icon='warning')
+            if msg_box == 'yes':
+                list_dir = os.listdir(r'C:/Users/akgh1/PycharmProjects/unzip/new')
+                for i1 in list_dir:
+                    os.remove("C:/Users/akgh1/PycharmProjects/unzip/new/" + i1)
+                treedata = sg.TreeData()
+                window["_TREE_"].update(
+                    add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+            list_file_s = []
+            window.un_hide()
+        else :
+            sg.popup("Error","You Should Be In Phase 1", keep_on_top=True,text_color="Red")
+
+
