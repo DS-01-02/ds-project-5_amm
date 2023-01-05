@@ -236,3 +236,22 @@ while True:
             with open('sorted_format.json', 'w') as json_file:
                 json.dump(sorted(dicr, key=sort_by_key_f), json_file)
             sg.popup('files was saved', title='save' , keep_on_top=True,text_color="Green")
+    elif event =='Set A Theme':
+        # window.hide()
+        event, values = sg.Window('Choose Theme',[[sg.Combo(sg.theme_list(), readonly=True, k='-THEME LIST-'), sg.OK(),sg.Cancel()]],keep_on_top=True).read(close=True)
+        if event == 'OK':
+            window.close()
+            settheme(values['-THEME LIST-'])
+            if faz3==False:
+                window = make_window(values['-THEME LIST-'])
+            if faz3==True:
+                window =make_window_phase3(values['-THEME LIST-'])
+        # else:
+            # window.un_hide()a
+    elif event =='Default Theme':
+        window.close()
+        settheme("DarkBlue")
+        if faz3 == False :
+            window = make_window()
+        if faz3 ==True:
+           window = make_window_phase3()
