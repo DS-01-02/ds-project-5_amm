@@ -44,7 +44,17 @@ def add_files_in_folder(parent, dirname):
             f2 = f.split('.')
             treedata.Insert(parent, fullname ,  text=f2[0], values=[ f2[1]+'       ' , f2[2]+'       '] , icon=file_icon)
     return treedata
-
+def sort_dict(list , sor):
+    l = len(list)
+    for i in range(l - 1):
+        for j in range(i + 1, l):
+            if (list[i]['name'] > list[j]['name'] and sor == 'name1') or (list[i]['format'] > list[j]['format'] and sor == 'type1') or (list[i]['date'] > list[j]['date'] and sor == 'date1')\
+                    or (list[i]['date'] < list[j]['date'] and sor == 'date2')or (list[i]['name'] < list[j]['name'] and sor == 'name2')\
+                    or (list[i]['format'] < list[j]['format'] and sor == 'type2'):
+                t = list[i]
+                list[i] = list[j]
+                list[j] = t
+    return list
 
 add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new")
 file_list_column = [
@@ -327,4 +337,27 @@ while True:
         else :
             sg.popup("Error","You Should Be In Phase 1", keep_on_top=True,text_color="Red")
 
-
+    elif event == 'Newest To Oldest' and faz1 == True:
+        sor = 'date2'
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+    elif event == 'Oldest To Newest' and faz1 == True:
+        sor = 'date1'
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+    elif event == 'A-Z' and faz1 == True:
+        sor = 'name1'
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+    elif event == 'Z-A' and faz1 == True:
+        sor = 'name2'
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+    elif event == 'A_Z' and faz1 == True:
+        sor = 'type1'
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+    elif event == 'Z_A' and faz1 == True:
+        sor = 'type2'
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
