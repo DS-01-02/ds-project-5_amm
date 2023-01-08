@@ -631,3 +631,17 @@ while True:
                     or '.mp4' in folder:
                 file2 = folder.split('.')
                 set_type.add('.' + file2[2])
+
+        for i in set_type:  # creat folder with type name
+            if '.txt' in i:
+                newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/text'
+            elif '.pdf' in i:
+                newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/pdf'
+            elif '.wav' in i or '.aiff' in i:
+                newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/voice'
+            elif '.jpg' in i or '.png' in i or '.gif' in i or '.jpeg' in i:
+                newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/photo'
+            else:
+                newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/video'
+            if not os.path.exists(newpath):
+                os.makedirs(newpath)
