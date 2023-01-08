@@ -604,3 +604,8 @@ while True:
                 or '.mp4' in folder:
             file2 = folder.split('.')
             set_year.add(int(file2[1]))
+
+    for i in set_year:  # creat folders with date names
+        newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(i)
+        if not os.path.exists(newpath):
+            os.makedirs(newpath)
