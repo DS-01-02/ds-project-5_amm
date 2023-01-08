@@ -617,3 +617,17 @@ while True:
             file2 = file.split('.')
             file_name = os.path.join(source, file)
             shutil.copy(file_name, destination + file2[1] + '/')
+
+    for file in set_year:
+        source = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/'
+        destination = "C:/Users/sh/Desktop/project amm 2/" + faz
+        files = os.listdir(source)
+        set_type = ()
+        set_type = set(set_type)
+
+        for folder in files:  # add types in set_type
+            if '.txt' in folder or '.png' in folder or '.zip' in folder or '.pdf' in folder or '.aiff' in folder or '.jpeg' in folder \
+                    or '.wav' in folder or '.avl' in folder or '.mkv' in folder or '.mov' in folder or '.jpg' in folder or '.gif' in folder \
+                    or '.mp4' in folder:
+                file2 = folder.split('.')
+                set_type.add('.' + file2[2])
