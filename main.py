@@ -586,3 +586,21 @@ while True:
         sor = 'type2'
         treedata = sg.TreeData()
         window['_TREE_'].update(add_files_in_folder('', "C:/Users/akgh1/PycharmProjects/unzip/new", sor))
+
+    faz2 = True
+    faz1 = False
+    faz3 = False
+    faz4 = False
+    faz = 'Phase2'
+    if not os.path.exists("C:/Users/sh/Desktop/project amm 2/" + faz):
+        os.makedirs("C:/Users/sh/Desktop/project amm 2/" + faz)
+
+    source = "C:/Users/sh/Desktop/project amm 2/new/"
+    destination = "C:/Users/sh/Desktop/project amm 2/" + faz + '/'
+    files = os.listdir(source)
+    for folder in files:  # add year in set_type
+        if '.txt' in folder or '.png' in folder or '.zip' in folder or '.pdf' in folder or '.aiff' in folder or '.jpeg' in folder \
+                or '.wav' in folder or '.avl' in folder or '.mkv' in folder or '.mov' in folder or '.jpg' in folder or '.gif' in folder \
+                or '.mp4' in folder:
+            file2 = folder.split('.')
+            set_year.add(int(file2[1]))
