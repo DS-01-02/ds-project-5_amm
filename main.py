@@ -609,3 +609,11 @@ while True:
         newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(i)
         if not os.path.exists(newpath):
             os.makedirs(newpath)
+
+    for file in files:  # move file in new folders
+        if '.txt' in file or '.png' in file or '.zip' in file or '.pdf' in file or '.aiff' in file or '.jpeg' in file \
+                or '.wav' in file or '.avl' in file or '.mkv' in file or '.mov' in file or '.jpg' in file or '.gif' in file \
+                or '.mp4' in file:
+            file2 = file.split('.')
+            file_name = os.path.join(source, file)
+            shutil.copy(file_name, destination + file2[1] + '/')
