@@ -31,13 +31,27 @@ Current_Change =" "
 Current_choice_for_sort = "A-Z"
 undo = []
 redo = []
-#stack_check=[]
+stack=[]
+stack_check=[]
 stack_index=[]
 Par=[]
 
 
+class Node:
+
+    def __init__(self, key):
+        self.key = key
+        self.children = []
 
 
+class Pair:
+    def __init__(self, _node, _childrenIndex):
+        self.node = _node
+        self.childrenIndex = _childrenIndex
+
+currentRootIndex = 0
+stack = []
+postorderTraversal = []
 if sys.version_info[0] >= 3:
     import PySimpleGUI as sg
 else:
