@@ -54,21 +54,7 @@ stack = []
 postorderTraversal = []
 if sys.version_info[0] >= 3:
     import PySimpleGUI as sg
-else:
-    import PySimpleGUI27 as sg
-folder_icon = b'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsSAAALEgHS3X78AAABnUlEQVQ4y8WSv2rUQRSFv7vZgJFFsQg2EkWb4AvEJ8hqKVilSmFn3iNvIAp21oIW9haihBRKiqwElMVsIJjNrprsOr/5dyzml3UhEQIWHhjmcpn7zblw4B9lJ8Xag9mlmQb3AJzX3tOX8Tngzg349q7t5xcfzpKGhOFHnjx+9qLTzW8wsmFTL2Gzk7Y2O/k9kCbtwUZbV+Zvo8Md3PALrjoiqsKSR9ljpAJpwOsNtlfXfRvoNU8Arr/NsVo0ry5z4dZN5hoGqEzYDChBOoKwS/vSq0XW3y5NAI/uN1cvLqzQur4MCpBGEEd1PQDfQ74HYR+LfeQOAOYAmgAmbly+dgfid5CHPIKqC74L8RDyGPIYy7+QQjFWa7ICsQ8SpB/IfcJSDVMAJUwJkYDMNOEPIBxA/gnuMyYPijXAI3lMse7FGnIKsIuqrxgRSeXOoYZUCI8pIKW/OHA7kD2YYcpAKgM5ABXk4qSsdJaDOMCsgTIYAlL5TQFTyUIZDmev0N/bnwqnylEBQS45UKnHx/lUlFvA3fo+jwR8ALb47/oNma38cuqiJ9AAAAAASUVORK5CYII='
-file_icon = b'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsSAAALEgHS3X78AAABU0lEQVQ4y52TzStEURiHn/ecc6XG54JSdlMkNhYWsiILS0lsJaUsLW2Mv8CfIDtr2VtbY4GUEvmIZnKbZsY977Uwt2HcyW1+dTZvt6fn9557BGB+aaNQKBR2ifkbgWR+cX13ubO1svz++niVTA1ArDHDg91UahHFsMxbKWycYsjze4muTsP64vT43v7hSf/A0FgdjQPQWAmco68nB+T+SFSqNUQgcIbN1bn8Z3RwvL22MAvcu8TACFgrpMVZ4aUYcn77BMDkxGgemAGOHIBXxRjBWZMKoCPA2h6qEUSRR2MF6GxUUMUaIUgBCNTnAcm3H2G5YQfgvccYIXAtDH7FoKq/AaqKlbrBj2trFVXfBPAea4SOIIsBeN9kkCwxsNkAqRWy7+B7Z00G3xVc2wZeMSI4S7sVYkSk5Z/4PyBWROqvox3A28PN2cjUwinQC9QyckKALxj4kv2auK0xAAAAAElFTkSuQmCC'
-pdf_icon = b'iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABEklEQVR4nOXUsUtCURTHccf6H4LgUVK74FpbQ+GkT0xwqGzSQcFCekEuEhSRSJO+RYR6ZIRQlE8kDFrCyaGWZvFv8MU3XndwsOw+VII68FvO5X7gnAvX5ZpkoSoaqmIOTWheJzI7JQsaqArDYlV1WF8w8c9MjwXsvb1gNa7kUCTBXrcjhyIzcrOK9fzwmXc9AwElPxL4RYy/AEa9kEtCdhOCc3ASh+wWhNygBcTZftABuOeH5i3clOA0Aa9tKB/BeU70ihnY9TkEn0yoV+A4Bu0WbHhEzwYf7+Bw2yHYuIadNXHJBlOrUDMEaI8dXnQAJlbgLN1fvHkJ9xcQX4bCAcSWfvuV1f8Eaj9+sIPRvgXHUR/MH2414AmKSAAAAABJRU5ErkJggg=='
-error_icon = b'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAB9JREFUOE9jZKAQMFKon2HUAIbRMGAYDQNQPhr4vAAAJpgAEX/anFwAAAAASUVORK5CYII='
-#png_icon2 = b'iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC/klEQVR4nLXRa0hTYRzH8QcTbxxdnjUvueVQz3SaGpWX2UUN7UKCpdB8Y1H0Qiu0UgkldWqZ03RKoC9EtNKKiFQKWczEF5VJF3vRG19EpuKYaW5Tsiu/OJtOTZ3bygNfznM45/w/50LIoo3D4XwQCoWfrYmiqBl3d66MWLoJBIJhvV4Pa5KmpX0JChJ/5fJ4ZeuKtN17gIT9B7Q0TV9bN+TO/Yd4NfDeMohFdDqd1Uj2hVzIqxQol1+Hl5f3Dy6PJzOLTE1NWYUolcpfBQUFP/Pz83/Px+fztWaRiYkJw80qlQrx8fEWp1KpTHBTU1ODWUSj0YD9ZPX1DahR1GL223dDY2Nq0/rv2OsaGxtNiEQieW0WUavVmJicRFm5HNU1CsOQtwPv4ORGobGl2SKksLCwbU1EMz5uQvTTM2AiwkFaMkFHiPGoq8sw+NPwCHT66RURds6ayMjoqAk5m3cRLjnJIH1lIMp8cMMY3LrdCk9GiKiEOGh1etuQj0NDBuSYNA30rlCQF6VGpK8MpCMXzh40SFEqHM8nIToxDhUVctsRZzcKpDNvAeibq/UcqGAhyM0zcMg+DIrjZjviknloOdBnzK7hNFzDA0DuZsFJutt2xDF37l+skn1VOlwjg2B/ap/tiH1iOMilZLNt2O4H+42UbYiyuxeXi2RrJiu9grq6OgwODlqGuG2itYJgEfhiBlvEoiUJQwLhuzVoxQShgUti56yKuDJ87ban1SDtOSu2o0cBTr/c7H9iY+dYh+wVg/h7gkglICmRcK1Ih3dqLBwqj4MEbgY5GP4fEJE3SGEKiJ8HSIwIJIRv2DsdjQZTchLMjSw4P7MC4UWFaJYhjBdI+h6Q6nQjIuAa90d2gmQkGB7CrvYEfLpKENZdBcnzevNIVF3Om4gexfI3mV/HiEBykkBixSAZiSABXiA+NEhzpumaiN7atT+X78sahKoqwTwpN+TfUbyw7pSBUV41xh63FyPgcanpfGh3FXz7FeYRZw9aTTH82X+NnbN48B+XfV3UxQsnKAAAAABJRU5ErkJggg=='
-png_icon = b'iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nM3Uz0vCYBzH8f19RqduRXhOyEMEmYd+EREh/djJyIWty2DUKIl+YBaFW6RBDBlqECJGaCQxNU/1iafRltDXYI3wC294+D7PXsdxXM9PRJCje0m15EURQY5yvKjE4dHwohLvAIt1d5Hgwb27/h88LAGpCpCuAidlZ8/ObMfu2JtfQa0GZOtA4dXJaAKZZyt2/n7HdlqtC6ibQK5hPb6utqHcPiLfeneQVieYM61vSJA9uiybWNrV4V84xvD8ESY3r6BWmji9e8KipGFoSsLa/g2MxpsNk+D0duYT+amBkARfMAbfqJV/TkZCf+gOUthXgzMJ9I9t2WhfMIZZ8YIGQ0IWgdVzBJZTZCMrZxhfT2NiQ7UjwfDOi6tIMGm0XUWCfx2egZ7/vnp+PgAfTTupXBvuHgAAAABJRU5ErkJggg=='
-# png_icon = b'iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAACXBIWXMAAAsTAAALEwEAmpwYAAABj0lEQVR4nO3TS0sCURgGYH9JyxbtgiBql00XdZLgzCBmLbJNi0g0K4IWrYIIiYiEBCGCFtEiIn+AjougKDAhwkrtIogaGd5Ccd4wMUOZsUGHCHrhXZ7v4ZzDp1D8RswcZq1eJM0cILXW0jkPZkQBkxs9Vi8KvjiQyEmvLw5YOeRNHLqFb+HBvN2HLJqI3YdsaY4YsuzwI9cM4vAjV5rzj8j3XJkCwEWA4JuMiP2qvANzXiCakQlZPa8uW+BVJuQuWb6NKwTwcj2X1Dj+HPL49Iz1jW0cHp2A5/nWI/ehMIh+EpSG+WwJq0ANEZMXxoMA0lIAqga6jOHF4kanQiwAIqlUGtForA4Ihh5Axox1QKW2TTuKxWJE0SinZxcJLTOBAZqFc3f/CwiFxYFK12xbGVFAOcx2qEf1/PdDO8493ARuwRimGgLVslpBpF/DLP18ECNYpYZZEEHISisQSkMWhRGatbQEocm0MKLStQ+OsPlmgCGt7p2i2TbRz+9Tk16ajLtoYriW3vFjSkW6aod+AC+SdEwCtiWhAAAAAElFTkSuQmCC'
-#mp4_icon= b'iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAACXBIWXMAAAsTAAALEwEAmpwYAAABxklEQVR4nOXWTUsbURQGYFf9F7ZduHJXkr0UJC6E4kJF6EasiqhZCAU/KHUnBlKjiDOoBKMSlURRYxQVlWQMET8maGbOvXco/Reu3LwyI4iisXNjRMEDL8zAmfPce2cWU1b2GsU5/0xkZojMs/8ltprUg8rsF2mEiOoYM+EmM9EVNLb2XQWVac+LItX13fJQMUi1LCSDLMQTaGofuE3Hz6HL6bn1ipIi7JHYz79DZD+lYXBYcZ39lCaPGEYeWibrOoaRl0f0XA6rG9uuo+dy8oi9usBYGMMuEhgLO/1v58V7Rv999KlC/THPU8XGpwrVG/xbXhDxhqx+b8hCCdJfeCch69fd5kCSoWVeoEYViBwQGsMC8UPCkkZonuNOT3CT4evEfcSe4xpJZBk03UQ0Tc55dy5yLKQZ/EscySNCQ1ggkaUHO5FGNo8Ie6eEC/MG2TshLKYJEzsMsUOGP1scPTH+PMQ+rm9TAucGOYg92L73KRZSZ4TjcxOneRNV40Uiyi5D7aRwrpczhO8RgaENdm/VbVGO32syOxmx/KX4ujwjlr8gUjlofuiNs67IAenFpjfOuuw5BRG7ZP5WHkmGiD49CbxUXQPC1KVWbctzLAAAAABJRU5ErkJggg=='
-mp4_icon = b'iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAACaElEQVR4nOXU3UuTYRjHcfFf0Ck5oyRrzoQeiKIaW7NtokJakNCbkbCyBjozxMpsWRsx6VGGL4T0GFZzU6dzpAfDcmEYDRwZtlAhcAmRe3euclD+Ylube3KF4UEHXfA9u+8P93VyJyT8n5M96CjK0tt7NxJL7zgcBdkDC6NsvR0biei3j8aCpsapJXxbAURG17qR4NnvK0DrpB8irdNEA8+99GJ4fhn7h53rwrL1duQbXDDZAmgY9eH4QxcdzBm0Y++QY92v4/Q5UahxoUzrgbjLDQnlpoPNVj+Ckz8SXpmlnsO2lkmw9QtrsH06Bwo0LlQNekN3hie+4mqHlw6Wjnmgfv8l9Mrt1AwYxU1IylMgTaIFe2AVJfodEGqdKHnshlTtxbg1gE6DH8r2RTq4+4kDxc/cYD2YBaOIRJLwdjRmuRpZ/Z+Qo/kIvmIWBS0fcLbLjWrKg3bdElT3l9DW+guoehdemXORQrKgYU1bL/SAX/MGggoLBJUWnGi0oanPF7pjfrWMTpWPDh412EBqxrGlUI7k3Bu00vLugFv+IoxFqrSggpyHeSIAfc9ndDfFgJn3pszZJ1U4UkUhNbceDP71aEyRYi32M5HUgrZHdmg7/OglY8BNJSq3knoaXrm0GSm8a6GYQjm458fiYsHK5NbQnZHni9CR/hjwGOnhnLqLS0odNgvqkMKtBVNwC7zy32PBCqpfg+y2oUxhRW29bSYKpp9um07l1CBS+qGb4P3hZfE6Uzs9vfrdyGSJOy4bMiLtlA6xd0mNRLz2SIzEAYmROBhMbCRKrrzNFNfNZchkSPy7P+5fzQ9jZbF6W9VYzQAAAABJRU5ErkJggg=='
-music_icon = b'iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC+UlEQVR4nNXS+09SYRgHcLR/od/6pa3a8of63ZUaYKiJmZXVRC01rZbO5VQKNcnbLMsylpdpdtHlpbWurNtSqym5QknAgJIjKCAIhobA8Yjf5rE0drSf69mevefZ8+zznvfdy2L9VwEWAsZ5eXxX7P58HAgVIoMjRF64EGU8Ia5ECiGJFKImUoiLkUIU7c5HZng0WKyANbERTskjW9QpzMVxQSXtAnWGC6qEB+p6FKjb0aDu8UG1RoNq2APf5QigYDdwgv1wVVS5U8InwoswkSWCd2gApF4D0qgBadKCtGpB2nUgp3QgHTqQkzp4DQr8qD0JZHOBhDA+A1SH1hQQXBHcQ2qsFfMzDpDGlb5Xr4Avhwsk7SpggiE14m/cAngJox/ifN4Fe0UVHCnJ8MSx4UqPWe7NTRD0tUAQJmYeOUQi/so5zwBHEkphjsjGRFQ6LPFpsB477g9mcoDDq4Cfd9SJNewSeAiTHzic0wrbCzncBiuwsABL04MV0KwHlcaG7wCbCQ7uaBQrQy/BrTf7gepGmX99p2v5220ygEiNh0EgqGSA8uAWcS+3Ds7RST+gt3nYr37X9nHlfk0mvMzKxcvj5RIGKOU9vtTCl8JOTPsBPdVj9Gq3z+JmvRwVxT3LPZvFhitnm9CUdaeZAbZEvG2oDVNg8qubHtbedqNjgwtdyUsbvOk3IbF8EKLawWVw3OrEybLXKMuTdjDAu6Hyew2bLHCo5uhhaa4TVZt/oK9xhq7nfQsYMH7HtGepvxjEpAu8GwpkF75/xgDbt6kftK3zwdDnoYd98wuYslL4W/SbZxDUOYqUUvkrBvhko+584/p51B9yQDs4ixG9G9qxWWhMS6myuaD8I2WmacQ9HUHQfSNOn+tnPhuwENi8xWIuDJlFxpEp7Mu3IFhixPZbBILa9XRu/bXS2TlKY3uvqszFxQhkgL/R+hD1hZL9mu6cUypZatGQ7KhY9SlRpNPEXPsyHFutUh6sUg4IKoc+JJUpuhf/bE3sn42fD3USo+60klMAAAAASUVORK5CYII='
-#txt_icon = b'iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAACXBIWXMAAAsTAAALEwEAmpwYAAABp0lEQVR4nGNgGAhw/fp1hatXrxy5evXKGUJ41fotZ3umLTQk2ZKrV68GXLt25T8xeP7Stf/DUip+9UybbUxTS1xCcki3iBxLXEi1iBRLlq3e9D8irQqOM0ravsxetFGFqpZcw4JB+kegJXsPHPpf3zGNaLz3wCHSLbl8+dL/Q0eOEY0vX75EuiVnz537v37zDqLx2XPnSLcE5LrOiXP/dxCBOyfOBasfPBH/LdRF7n1iyPTXFTkHyMXvE0Omf/N3k8Vpyacg58rPQS7/KcWfgpwr8VlSg6z46cSO//c2rwXjp5O6/j9aMAssDqKfTWhHyE3sQLekhmhLPkb7/X+4aM7/J1N7/3+K8f1/Z/eO/w8XzgLTn6J9weIgeZA6si0B4SezJv9/1t0EZr+qLQJH7quaQjAfJA6SxxJcZFoS7Pr/7vZN/x8sX/j/zvbNYD7VLHne1fj/VW3x/3fpMf/vr14KNvzB6iX/36dHgcVB8iRZ8jnQOZcaqetzoHMuTkv+h4ayPW+vy76/aslZcvHz9rpskDk4LQEBUlorWPCRq1evyuO1gFYAAJnylqtdIZ1TAAAAAElFTkSuQmCC'
-txt_icon = b'iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABZ0lEQVR4nGNgQANXrlzhuXTpkiAu/OjRMU4GYsGNG5f0rl69/PfatSv/ceFpc5d9bOqZ5kOUgdevX3bAZxgI905d8N8/ruRvS98sf6oZ6BKSQ5yh14kwcNnqjf9L6vvBuK5j6tctW3YrUWQgOr5+/bID/Q1cvWHb/0kzF+PFIDVEG3j23Nn/h44cw4tBaog2cOHydf/rO6bhxYuWr6dzGP63t2d5lxFZ+7y56gAp+F1GZC1IL4aBn4Od9D4HufwnCwc76WEY+MXf1QCm4GOM//+7u7f9v3Xs0P+nU7r/P549GYyfTu4Ci4HkQGpg6r/4uxrgNRCE3xSm/38ya/L/z8Gu/+9tXvv/3qa1YDZIDCSHrPYLKQZ+ivL5f2fXVjD+GOVLvoEfUsL/v6opBGt+XZUPxm8K08BiIDmCBn7ysRf5HOp27GOk5zVSMEgPSC/WpENMAYuMQWpBerAaBgOEqgBkDFKLbgAAQ0AolZ/f/oEAAAAASUVORK5CYII='
-treedata = sg.TreeData()
+
 # dicr = []
 # sorted_dicr = []
 for_faz3 = []
@@ -111,6 +97,51 @@ def add_files_in_folder_2(parent, dirname):
                 treedata.Insert(parent, fullname ,  text=f2[0], values=[ f2[1]+'' , f2[2]+''] , icon=file_icon)
     for_faz3.append('}')
     return treedata
+def MakeTree(root, a):
+    for i in range(1, len(a)):
+        tmp = newNode(None)
+        if a[i] == "{" and i != 1:
+            continue
+        if a[i] == "{":
+            tmp =newNode( a[i - 1])
+            root = tmp
+            index = -1
+            stack_index.append(index)
+            stack.append(root)
+
+        elif i + 1 < len(a) and a[i + 1] == "{":
+            tmp =newNode(a[i])
+            root = tmp
+            index = -1
+            stack_index.append(index)
+            stack.append(root)
+
+        elif a[i] == "}":
+            if len(stack) == 0:
+                tmp_root = root
+                return root
+
+            index = stack_index.pop()
+
+            ab = stack.pop()
+            if len(stack) == 0:
+                if i == len(a) - 1:
+                    tmp_root = root
+                return root
+            root = stack.pop()
+            root.children.append(ab)
+            index = stack_index.pop()
+            index = index + 1
+            stack_index.append((index))
+            stack.append(root)
+        else:
+            tmpp =newNode(a[i])
+            root.children.append(tmpp)
+
+            index = stack_index.pop()
+            index = index + 1
+            stack_index.append(index)
+# Driver program
 def add_files_in_folder(parent, dirname,sor):
     files = os.listdir(dirname)
     dicr2 = {}
