@@ -645,3 +645,25 @@ while True:
                 newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/video'
             if not os.path.exists(newpath):
                 os.makedirs(newpath)
+
+            for i in files:
+                if '.txt' in i:
+                    newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/text/'
+                elif '.pdf' in i:
+                    newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/pdf/'
+                elif '.wav' in i or '.aiff' in i:
+                    newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/voice/'
+                elif '.jpg' in i or '.png' in i or '.gif' in i or '.jpeg' in i:
+                    newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/photo/'
+                elif '.mp4' in i or '.mov' in i or '.mkv' in i or '.avl' in i:
+                    newpath = "C:/Users/sh/Desktop/project amm 2/" + faz + '/' + str(file) + '/video/'
+                if '.txt' in i or '.png' in i or '.zip' in i or '.pdf' in i or '.aiff' in i or '.jpeg' in i \
+                        or '.wav' in i or '.avl' in i or '.mkv' in i or '.mov' in i or '.jpg' in i or '.gif' in i \
+                        or '.mp4' in i:
+                    file2 = i.split('.')
+                    file_name = os.path.join(source, i)
+                    shutil.move(file_name, newpath)
+
+            treedata = sg.TreeData()
+            window["_TREE_"].update(add_files_in_folder('', "C:/Users/sh/Desktop/project amm 2/Phase2", ''))
+            window['-CUST MENUBAR-'].update('')
