@@ -30,7 +30,7 @@ sor = ''
 Current_Change =" "
 Current_choice_for_sort = "A-Z"
 undo = []
-redo = []
+undo = []
 Is_Unzp = False
 if os.path.exists("C:/Users/User/PycharmProjects/pythonProject18/Phase3/"):
     Is_Unzp = True
@@ -257,7 +257,35 @@ def MakeTree(root, a):
             index = index + 1
             stack_index.append(index)
 
+def clear (clean_list):
+    i = 0
+    while i<len(clean_list):
+        if clean_list[i]=="{" and clean_list[i+1] =="}":
+            clean_list.pop(i)
+            clean_list.pop(i)
+            i=i-1
+        i+=1
+    return clean_list
 
+def Check_in_Add(tmp_add):
+    add=tmp_add.split('.')
+    i =1
+    if len(add) == 3 and (
+            add[2] == 'txt' or add[2] == 'png' or add[2] == 'jpg' or add[2] == 'mp4' or
+            add[2] == 'gif' or add[2] == 'jpeg' or add[2] == 'mov' or add[2] == 'mkv' or
+            add[2] == 'avl' or add[2] == 'aiff' or add[2] == 'wav' or add[2] == 'pdf') \
+            and add[1] != '':
+        add2=[]
+        add2.append(tmp_add)
+        while add2 in list_file_s:
+            add2.clear()
+            add1 = tmp_add.split('.')
+            add1[0] = add[0]+" "+"("+str(i)+")"
+            i=i+1
+            tmp_add = add1[0]+"."+add1[1]+"."+add1[2]
+            add2.append(tmp_add)
+
+        return tmp_add
 
 if sys.version_info[0] >= 3:
     import PySimpleGUI as sg
@@ -382,7 +410,7 @@ def make_window(theme=THEME):
         sg.theme(theme)
         THEME = theme
     menu_def = [['&File', ['&New',['New File'],'Extract', '&Remove', ['A File', 'All Files'],'Save', 'E&xit']],
-                ['&Option',["Zip","Undo","Redo"]],
+                ['&Option',["Zip","undo","undo"]],
                 ['&Project', ['&Phase 1', '&Phase 2', '&Phase 3']],
                 ['&Theme', ['Set A Theme', 'Default Theme']],
                 ['&Sort',['&Name', ['A-Z', 'Z-A'], 'Date', ['Newest To Oldest', 'Oldest To Newest'], 'Type',
@@ -391,7 +419,7 @@ def make_window(theme=THEME):
 
     file_list_column = [
         [sg.MenubarCustom(menu_def, pad=(0, 0), k='-CUST MENUBAR-'),sg.Input(background_color='white',text_color="Black",change_submits=True , key='-serch-'),sg.Button('Search')],
-        [sg.Button("Undo"),sg.Text("                                                                                                                                           "),sg.Button("Redo")],
+        [sg.Button("undo"),sg.Text("                                                                                                                                           "),sg.Button("undo")],
         [sg.Tree(data=treedata,
                  enable_events=True,
                  headings=['Date', 'Type'], num_rows=20,
@@ -400,7 +428,7 @@ def make_window(theme=THEME):
                  change_submits=True,
                  expand_y=True,row_height=20,justification='mid', col0_heading='Name', key='_TREE_', show_expanded=False, background_color='white',
                  header_text_color='black', text_color='black',right_click_menu=['&Right', ["Refresh","Add","Delete","Extract",'&Sort',['&Name', ['A-Z', 'Z-A'], 'Date', ['Newest To Oldest', 'Oldest To Newest'], 'Type',
-                  ['A_Z', 'Z_A']],'&Theme', ['Set A Theme', 'Default Theme'],"&Options",["Zip","Undo","Redo"],'Exit']]), ],
+                  ['A_Z', 'Z_A']],'&Theme', ['Set A Theme', 'Default Theme'],"&Options",["Zip","undo","undo"],'Exit']]), ],
         [sg.Text("Choose a ZipFile: ",key='ch' , visible=True), sg.Input(key="-IN2-", change_submits=True, size=(45),visible=True ,text_color="Black"),
          sg.FileBrowse (key="-IN-", file_types=(('Zip Files', '*.zip'), ('All Files', '*.*')),size=(7,1),visible=True)
             ,sg.Button("Extract" , key='Ex' ,visible=True,size=(7,1)),sg.Button('Save',size=(7,1))],
@@ -490,7 +518,7 @@ while True:
                 output_filename = "C:/Users/User/PycharmProjects/pythonProject18/Zip/zip"
                 shutil.make_archive(output_filename, 'zip', dir_name)
                 undo.clear()
-                redo.clear()
+                undo.clear()
                 Is_Unzp = False
 
                 if os.path.exists("C:/Users/User/PycharmProjects/pythonProject18/dirname/"):
@@ -791,13 +819,13 @@ while True:
 
         window['-CUST MENUBAR-'].update('')
 
-    elif (event == "Undo"):
+    elif (event == "undo"):
         if faz1 == True:
             if len(undo) != 0:
                 a = undo.pop()
-                #save current state in redo
+                #save current state in undo
                 if Current_Change != " ":
-                    redo.append(Current_Change)
+                    undo.append(Current_Change)
                 tmp = a.split('.')
                 while a ==Current_Change and len(undo) != 0:
                     a=undo.pop()
@@ -860,17 +888,17 @@ while True:
                                 add_files_in_folder('', "C:/Users/User/PycharmProjects/pythonProject18/new", sor))
         else:
             sg.popup("Error","You Should Be In Phase 1", keep_on_top=True,text_color="Red")
-    elif (event == "Redo"):
+    elif (event == "undo"):
         if faz1 == True:
-            if len(redo) !=0:
+            if len(undo) !=0:
                 for i in range(0,1):
-                    a = redo.pop()
+                    a = undo.pop()
                     undo.append(Current_Change)
-                    if len(redo) == 0:
+                    if len(undo) == 0:
                         undo.append(a)
                     tmp = a.split('.')
                     while a == Current_Change and len(undo) != 0:
-                        a = redo.pop()
+                        a = undo.pop()
                         tmp = a.split('.')
 
                     if tmp[0] == "default":
@@ -1049,7 +1077,7 @@ while True:
                                                 icon='warning')
             if msg_box == 'yes':
                 undo.clear()
-                redo.clear()
+                undo.clear()
                 list_dir = os.listdir(r'C:/Users/User/PycharmProjects/pythonProject18/new')
                 for i1 in list_dir:
                     os.remove("C:/Users/User/PycharmProjects/pythonProject18/new/" + i1)
@@ -1186,7 +1214,7 @@ while True:
         treedata = sg.TreeData()
         window['_TREE_'].update(add_files_in_folder('', "C:/Users/User/PycharmProjects/pythonProject18/new", sor))
 
-
+   
 
 
     elif event =="Refresh":
