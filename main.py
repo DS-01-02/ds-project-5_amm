@@ -179,7 +179,38 @@ def inorder(node):
             ab = inorder(node.children[i])
         inorder_list_phase3.append(node.key)
 
+def Search(root,value):
+    if (root == None):
+        return;
 
+    # using queue
+    q = []  # Create a queue
+    q.append(root);  # Enqueue root
+    while (len(q) != 0):
+
+        n = len(q);
+
+        # If this node has childrenren
+        while (n > 0):
+
+            # Dequeue an item from queue
+            p = q[0]
+            q.pop(0);
+            if p != None:
+                if value == p.key:
+                    return p
+
+            # Enqueue all children of the dequeued item
+            if p!=None:
+                for i in range(len(p.children)):
+                    if p != None:
+                        q.append(p.children[i]);
+
+                n -= 1
+
+
+    if len(q)==0:
+        return
 
 def MakeTree(root, a):
     for i in range(1, len(a)):
@@ -225,6 +256,7 @@ def MakeTree(root, a):
             index = stack_index.pop()
             index = index + 1
             stack_index.append(index)
+
 
 
 if sys.version_info[0] >= 3:
@@ -1153,6 +1185,9 @@ while True:
         sor = 'type2'
         treedata = sg.TreeData()
         window['_TREE_'].update(add_files_in_folder('', "C:/Users/User/PycharmProjects/pythonProject18/new", sor))
+
+
+
 
     elif event =="Refresh":
 
