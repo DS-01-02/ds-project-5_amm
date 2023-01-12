@@ -30,7 +30,7 @@ sor = ''
 Current_Change =" "
 Current_choice_for_sort = "A-Z"
 undo = []
-undo = []
+redo = []
 Is_Unzp = False
 if os.path.exists("C:/Users/User/PycharmProjects/pythonProject18/Phase3/"):
     Is_Unzp = True
@@ -410,7 +410,7 @@ def make_window(theme=THEME):
         sg.theme(theme)
         THEME = theme
     menu_def = [['&File', ['&New',['New File'],'Extract', '&Remove', ['A File', 'All Files'],'Save', 'E&xit']],
-                ['&Option',["Zip","undo","undo"]],
+                ['&Option',["Zip","Undo","Redo"]],
                 ['&Project', ['&Phase 1', '&Phase 2', '&Phase 3']],
                 ['&Theme', ['Set A Theme', 'Default Theme']],
                 ['&Sort',['&Name', ['A-Z', 'Z-A'], 'Date', ['Newest To Oldest', 'Oldest To Newest'], 'Type',
@@ -419,7 +419,7 @@ def make_window(theme=THEME):
 
     file_list_column = [
         [sg.MenubarCustom(menu_def, pad=(0, 0), k='-CUST MENUBAR-'),sg.Input(background_color='white',text_color="Black",change_submits=True , key='-serch-'),sg.Button('Search')],
-        [sg.Button("undo"),sg.Text("                                                                                                                                           "),sg.Button("undo")],
+        [sg.Button("Undo"),sg.Text("                                                                                                                                           "),sg.Button("Redo")],
         [sg.Tree(data=treedata,
                  enable_events=True,
                  headings=['Date', 'Type'], num_rows=20,
@@ -428,7 +428,7 @@ def make_window(theme=THEME):
                  change_submits=True,
                  expand_y=True,row_height=20,justification='mid', col0_heading='Name', key='_TREE_', show_expanded=False, background_color='white',
                  header_text_color='black', text_color='black',right_click_menu=['&Right', ["Refresh","Add","Delete","Extract",'&Sort',['&Name', ['A-Z', 'Z-A'], 'Date', ['Newest To Oldest', 'Oldest To Newest'], 'Type',
-                  ['A_Z', 'Z_A']],'&Theme', ['Set A Theme', 'Default Theme'],"&Options",["Zip","undo","undo"],'Exit']]), ],
+                  ['A_Z', 'Z_A']],'&Theme', ['Set A Theme', 'Default Theme'],"&Options",["Zip","Undo","Redo"],'Exit']]), ],
         [sg.Text("Choose a ZipFile: ",key='ch' , visible=True), sg.Input(key="-IN2-", change_submits=True, size=(45),visible=True ,text_color="Black"),
          sg.FileBrowse (key="-IN-", file_types=(('Zip Files', '*.zip'), ('All Files', '*.*')),size=(7,1),visible=True)
             ,sg.Button("Extract" , key='Ex' ,visible=True,size=(7,1)),sg.Button('Save',size=(7,1))],
@@ -518,7 +518,7 @@ while True:
                 output_filename = "C:/Users/User/PycharmProjects/pythonProject18/Zip/zip"
                 shutil.make_archive(output_filename, 'zip', dir_name)
                 undo.clear()
-                undo.clear()
+                redo.clear()
                 Is_Unzp = False
 
                 if os.path.exists("C:/Users/User/PycharmProjects/pythonProject18/dirname/"):
@@ -819,13 +819,13 @@ while True:
 
         window['-CUST MENUBAR-'].update('')
 
-    elif (event == "undo"):
+    elif (event == "Undo"):
         if faz1 == True:
             if len(undo) != 0:
                 a = undo.pop()
-                #save current state in undo
+                #save current state in redo
                 if Current_Change != " ":
-                    undo.append(Current_Change)
+                    redo.append(Current_Change)
                 tmp = a.split('.')
                 while a ==Current_Change and len(undo) != 0:
                     a=undo.pop()
@@ -888,17 +888,17 @@ while True:
                                 add_files_in_folder('', "C:/Users/User/PycharmProjects/pythonProject18/new", sor))
         else:
             sg.popup("Error","You Should Be In Phase 1", keep_on_top=True,text_color="Red")
-    elif (event == "undo"):
+    elif (event == "Redo"):
         if faz1 == True:
-            if len(undo) !=0:
+            if len(redo) !=0:
                 for i in range(0,1):
-                    a = undo.pop()
+                    a = redo.pop()
                     undo.append(Current_Change)
-                    if len(undo) == 0:
+                    if len(redo) == 0:
                         undo.append(a)
                     tmp = a.split('.')
                     while a == Current_Change and len(undo) != 0:
-                        a = undo.pop()
+                        a = redo.pop()
                         tmp = a.split('.')
 
                     if tmp[0] == "default":
@@ -1077,7 +1077,7 @@ while True:
                                                 icon='warning')
             if msg_box == 'yes':
                 undo.clear()
-                undo.clear()
+                redo.clear()
                 list_dir = os.listdir(r'C:/Users/User/PycharmProjects/pythonProject18/new')
                 for i1 in list_dir:
                     os.remove("C:/Users/User/PycharmProjects/pythonProject18/new/" + i1)
@@ -1214,7 +1214,68 @@ while True:
         treedata = sg.TreeData()
         window['_TREE_'].update(add_files_in_folder('', "C:/Users/User/PycharmProjects/pythonProject18/new", sor))
 
-   
+    elif event == 'Phase 3' and faz3==False  and os.path.exists("C:/Users/User/PycharmProjects/pythonProject18/Phase3/"):
+        faz3 = True
+        faz2 = False
+        faz1 = False
+        faz4 = False
+        window.close()
+        window = make_window_phase3(THEME)
+        if os.path.exists("C:/Users/User/PycharmProjects/pythonProject18/Phase2/"):
+            shutil.rmtree("C:/Users/User/PycharmProjects/pythonProject18/Phase2/")
+
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder_2('', 'C:/Users/User/PycharmProjects/pythonProject18/Phase3'))
+
+
+    elif event == "Search for Root" and values['-ROOT-'] !='':
+        postorder_list_phase3.clear()
+        preorderlist_phase3.clear()
+        inorder_list_phase3.clear()
+        for_faz3.clear()
+        treedata = sg.TreeData()
+        window['_TREE_'].update(add_files_in_folder_2('' ,'C:/Users/User/PycharmProjects/pythonProject18/Phase3'))
+        for_faz3 = clear(for_faz3)
+        root = newNode()
+        root = MakeTree(root, for_faz3)
+        s = Search(root, values['-ROOT-'])
+        if s!=None:
+            inorder(s)
+            preorderlist_phase3 = preorder(s)
+            postorder_list_phase3 = postorder(s)
+            sg.popup('Message','Now u can choose Traversals', keep_on_top=True,text_color="green")
+
+        else:
+            sg.popup('Error','There is not any Folder or File by this Name', keep_on_top=True,text_color="Red")
+    elif event =="Postorder":
+        if faz3 == False:
+            sg.popup('Error', 'You should be in Phase 3', keep_on_top=True, text_color="Red")
+        elif values['-ROOT-'] =='' and faz3 == True:
+            sg.popup('Error','Please Choose a Root', keep_on_top=True,text_color="Red")
+        else :
+            if faz3 == True:
+                if len(postorder_list_phase3) != 0:
+                    sg.Popup(postorder_list_phase3, title="Postorder",keep_on_top=True)
+
+    elif event =="Inorder":
+        if faz3 == False:
+            sg.popup('Error', 'You should be in Phase 3', keep_on_top=True, text_color="Red")
+        elif values['-ROOT-'] =='' and faz3 ==True :
+            sg.popup('Error','Please Choose a Root', keep_on_top=True,text_color="Red")
+        else :
+            if faz3 == True:
+                if len(inorder_list_phase3) != 0:
+                    sg.Popup(inorder_list_phase3, title="Inorder",keep_on_top=True)
+
+    elif event =="Preorder":
+        if faz3 ==False :
+            sg.popup('Error','You should be in Phase 3', keep_on_top=True,text_color="Red")
+        elif values['-ROOT-'] =='' and faz3 ==True:
+            sg.popup('Error','Please Choose a Root', keep_on_top=True,text_color="Red")
+        else :
+            if faz3 == True:
+                if len(preorderlist_phase3) != 0:
+                    sg.Popup(preorderlist_phase3, title="Preorder",keep_on_top=True)
 
 
     elif event =="Refresh":
