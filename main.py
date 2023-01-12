@@ -1284,6 +1284,18 @@ while True:
         values['-serch-'] = ''
         event = "Search"
 
+    elif event == "About...":
+        # window.disappear()
+        sg.theme(THEME)
+        sg.popup('About : ',
+                 ' This project is about nested files and first you extract your file and see all thing (with specific formats) in your file but you can use our project just for extract if you dont have unzipper then you can add file, remove, sort, undo, redo ,search ,make tree and see navigations of your files (preorder , postorder , inorder ) , you can customize your theme every color you want and also you can have folders sorted by data and in them folders sorted by type etc... (you can have all things I said by right click on your mouse in project) '
+
+                 , 'If you have question or Proposal or censure you can email us:'
+                 , 'Ali : akgh1382@gmail.com'
+                 , 'Mohammad : mohammadjafari18132@gmail.com'
+                 , 'Matin : matin.zohori8@gmail.com', grab_anywhere=True, keep_on_top=True, font=12)
+        window.reappear()
+
     if event == 'Search' :
         exist2 = False
         if values['-serch-'] == '':
