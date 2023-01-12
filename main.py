@@ -86,6 +86,37 @@ def newNode(key=Node):
 
 
 
+def preorder(root):
+    Stack = deque([])
+    Par =newNode()
+
+    Preorder = []
+    Preorder.append(root.key)
+    Stack.append(root)
+    while len(Stack) > 0:
+
+        flag = 0
+
+        if len((Stack[len(Stack) - 1]).children) == 0:
+            X = Stack.pop()
+
+        else:
+            Par = Stack[len(Stack) - 1]
+
+        if Par != None:
+            for i in range(0, len(Par.children)):
+                if Par.children[i] !=None:
+                    if Par.children[i].key not in Preorder:
+                        flag = 1
+                        Stack.append(Par.children[i])
+                        Preorder.append(Par.children[i].key)
+                        break;
+
+        if flag == 0:
+            if len(Stack):
+                Stack.pop()
+
+    return (Preorder)
 def inorder(node):
     if node == None:
         return
@@ -163,17 +194,6 @@ def MakeTree(root, a):
             index = stack_index.pop()
             index = index + 1
             stack_index.append(index)
-
-def clear (clean_list):
-    i = 0
-    while i<len(clean_list):
-        if clean_list[i]=="{" and clean_list[i+1] =="}":
-            clean_list.pop(i)
-            clean_list.pop(i)
-            i=i-1
-        i+=1
-    return clean_list
-
 
 
 if sys.version_info[0] >= 3:
