@@ -84,7 +84,38 @@ def newNode(key=Node):
     temp = Node(key)
     return temp
 
+def postorder(root):
+    global currentRootIndex
+    global stack
+    global postorderTraversal
+    postorderTraversal.clear()
+    while (root != None or len(stack) != 0):
+        if (root != None):
 
+            stack.append(Pair(root, currentRootIndex))
+            currentRootIndex = 0
+
+            if (len(root.children) >= 1):
+                root = root.children[0]
+            else:
+                root = None
+            continue
+
+        temp = stack.pop()
+        postorderTraversal.append(temp.node.key)
+
+        while (len(stack) != 0 and temp.childrenIndex ==
+               len(stack[-1].node.children) - 1):
+            temp = stack[-1]
+            stack.pop()
+
+            postorderTraversal.append(temp.node.key)
+
+        if (len(stack) != 0):
+            root = stack[-1].node.children[temp.childrenIndex + 1]
+            currentRootIndex = temp.childrenIndex + 1
+
+    return postorderTraversal
 
 def preorder(root):
     Stack = deque([])
@@ -1122,9 +1153,6 @@ while True:
         sor = 'type2'
         treedata = sg.TreeData()
         window['_TREE_'].update(add_files_in_folder('', "C:/Users/User/PycharmProjects/pythonProject18/new", sor))
-
-
-
 
     elif event =="Refresh":
 
